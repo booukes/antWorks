@@ -1,14 +1,160 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		%sveltekit.head%
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-	</head>
-	<body data-sveltekit-preload-data="hover" style="overflow-x: hidden;" class="bg-gradient-to-r from-[#2e3031] to-[#4a4c4e]">
-		<div style="display: contents">%sveltekit.body%</div>
-	</body>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	%sveltekit.head%
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+	<style>
+		body {
+			background-color: #050921;
+			overflow-x: hidden;
+			overflow-y: auto;
+			margin: 0;
+			padding: 0;
+		}
+		#starfield {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: -1;
+		}
+	</style>
+</head>
+<body data-sveltekit-preload-data="hover">
+	<canvas id="starfield"></canvas>
+	<div style="display: contents">%sveltekit.body%</div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			const canvas = document.getElementById('starfield');
+			const ctx = canvas.getContext('2d');
+
+			const setCanvasSize = () => {
+				canvas.width = window.innerWidth;
+				canvas.height = window.innerHeight;
+			};
+			setCanvasSize();
+			window.addEventListener('resize', setCanvasSize);
+			
+			const starConfig = {
+				slowest: {
+					count: 1000,
+					size: { min: 0.2, max: 0.4 },
+					speed: { min: 0.001, max: 0.01 }
+				},
+				slow: {
+					count: 500,
+					size: { min: 0.4, max: 0.7 },
+					speed: { min: 0.01, max: 0.3 }
+				},
+				medium: {
+					count: 120,
+					size: { min: 0.6, max: 1.0 },
+					speed: { min: 0.3, max: 0.5 }
+				},
+				fast: {
+					count: 20,
+					size: { min: 0.8, max: 1.2 },
+					speed: { min: 0.5, max: 0.7 }
+				},
+				fastest: {
+					count: 10,
+					size: { min: 1.0, max: 1.5 },
+					speed: { min: 0.7, max: 1.2 }
+				}
+			};
+
+			const stars = [];
+			let mouse = { x: null, y: null };
+			let meteors = [];
+
+			for (const type in starConfig) {
+				const config = starConfig[type];
+				for (let i = 0; i < config.count; i++) {
+					stars.push({
+						x: Math.random() * canvas.width,
+    					y: Math.random() * canvas.height,
+						size: Math.random() * (config.size.max - config.size.min) + config.size.min,
+						speed: Math.random() * (config.speed.max - config.speed.min) + config.speed.min,
+						opacity: Math.random() * 0.5 + 0.5
+					});
+				}
+			}
+
+			function spawnMeteor() {
+			    meteors.push({
+			        x: Math.random() * canvas.width * 1.5,
+			        y: -10,
+			        len: Math.random() * 100 + 50,
+					speed: Math.random() * 28 + 4,
+			        	
+			    });
+			}
+			setInterval(spawnMeteor, 4000);
+
+			window.addEventListener('mousemove', e => {
+			    mouse.x = e.clientX;
+			    mouse.y = e.clientY;
+			});
+
+			function animate() {
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+				const bgGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+				bgGradient.addColorStop(0, '#290445');
+				bgGradient.addColorStop(1, '#000000');
+				ctx.fillStyle = bgGradient;
+				ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+				stars.forEach(star => {
+					star.x -= star.speed * 0.5 * Math.random() * (1 - 0.15) + 0.15;
+					star.y += star.speed * 0.5 * Math.random() * (1 - 0.15) + 0.15;
+
+					if (star.x < -star.size) star.x = canvas.width + star.size;
+					if (star.y > canvas.height + star.size) star.y = -star.size;
+
+					const offsetX = (mouse.x - canvas.width / 2) / 25;
+					const offsetY = (mouse.y - canvas.height / 2) / 25;
+
+					const parallaxX = star.x + offsetX * star.speed;
+					const parallaxY = star.y + offsetY * star.speed;
+
+					ctx.beginPath();
+					ctx.arc(parallaxX, parallaxY, star.size, 0, Math.PI * 2);
+					ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+					ctx.fill();
+				});
+
+				meteors.forEach((meteor, index) => {
+				    const gradient = ctx.createLinearGradient(meteor.x, meteor.y, meteor.x - meteor.len, meteor.y + meteor.len);
+				    gradient.addColorStop(0, `rgba(255, 255, 255, 0.7)`);
+				    gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
+
+				    ctx.beginPath();
+				    ctx.strokeStyle = gradient;
+				    ctx.lineWidth = meteor.width;
+				    ctx.moveTo(meteor.x, meteor.y);
+				    ctx.lineTo(meteor.x - meteor.len, meteor.y + meteor.len);
+				    ctx.stroke();
+
+				    meteor.x -= meteor.speed;
+				    meteor.y += meteor.speed;
+
+				    if (meteor.x < -meteor.len) {
+				        meteors.splice(index, 1);
+				    }
+				});
+
+				requestAnimationFrame(animate);
+			}
+
+			animate();
+		});
+	</script>
+</body>
 </html>

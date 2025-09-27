@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { Titlebar } from '$lib';
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		window.location.replace('/about');
+	});
 </script>
 
-<main class="flex min-h-screen flex-col gap-4">
-	<Titlebar />
-</main>
+<main class="flex min-h-screen flex-col gap-4"></main>

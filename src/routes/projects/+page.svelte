@@ -1,5 +1,4 @@
 <script lang="ts">
-	// --- KROK 1: Importujemy onMount ---
 	import { onMount } from 'svelte';
 	import { Titlebar } from '$lib';
 	import { fly } from 'svelte/transition';
@@ -40,7 +39,6 @@
 		expanded: boolean;
 	}
 
-	// --- KROK 2: Dane projektów w stałej ---
 	const initialProjects: Project[] = [
 		{
 			title: 'Project One',
@@ -79,10 +77,8 @@
 		}
 	];
 
-	// --- KROK 3: Startujemy z pustą tablicą ---
 	let projects: Project[] = [];
 
-	// --- KROK 4: Wypełniamy ją w onMount ---
 	onMount(() => {
 		projects = initialProjects;
 	});
@@ -97,8 +93,8 @@
 	<div class="grid grid-cols-1 gap-6 md:grid-cols-2 md:items-start">
 		{#each projects as project, i (project.title)}
 			<div
-				in:fly={{ y: 200, duration: 600, delay: i * 150, easing: cubicOut }}
-				class="rounded-2xl border border-white/20 bg-black/40 p-6 shadow-lg backdrop-blur-lg transition-all duration-300"
+				in:fly={{ y: 200, duration: 800, delay: i * 150, easing: cubicOut }}
+				class="rounded-2xl border border-white/20 p-6 shadow-lg backdrop-blur-lg transition-all duration-300"
 			>
 				<button
 					type="button"

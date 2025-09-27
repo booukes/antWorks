@@ -1,14 +1,8 @@
 <script lang="ts">
-	// 👈 Dodajemy lang="ts"
 	import { enhance } from '$app/forms';
-	// Importujemy `ActionData`, czyli specjalny, auto-generowany typ
-	// dla danych zwrotnych z naszego `+page.server.ts` 👈
 	import type { ActionData } from './$types';
 	import { Titlebar } from '$lib';
 	import { fly } from 'svelte/transition';
-
-	// Dodajemy typ do `form`. Teraz TS wie, że `form` może
-	// zawierać `message` i `success` albo być niezdefiniowane. 👈
 	export let form: ActionData;
 	let submitting = false;
 
@@ -25,7 +19,7 @@
 
 <div
 	in:fly={{ y: 20, duration: 500 }}
-	class="mx-auto mt-12 max-w-xl rounded-2xl border border-white/20 bg-black/40 p-8 shadow-lg backdrop-blur-lg"
+	class="mx-auto mt-12 max-w-xl rounded-2xl border border-white/20 p-8 shadow-lg backdrop-blur-lg"
 >
 	<h1 class="mb-6 font-serif text-3xl font-bold text-gray-100">Contact Me</h1>
 
@@ -83,7 +77,7 @@
 
 		<button
 			type="submit"
-			class="flex w-full items-center justify-center gap-2 rounded-lg bg-green-700 py-2 font-serif text-white transition hover:bg-green-900 disabled:cursor-not-allowed disabled:opacity-50"
+			class="flex w-full items-center justify-center gap-2 rounded-lg bg-[#290445] py-2 font-serif text-white transition hover:bg-[#3c0964] disabled:cursor-not-allowed disabled:opacity-50"
 			disabled={submitting}
 		>
 			{#if submitting}

@@ -2,20 +2,18 @@ import nodemailer from 'nodemailer';
 import { fail } from '@sveltejs/kit';
 import type { Actions, RequestEvent } from '@sveltejs/kit';
 
-// ❗️ Zostawiamy import TYLKO dla usera i hasła 
 import { SMTP_USER, SMTP_PASS } from '$env/static/private';
 
-// 👇 Resztę danych wpisujemy na sztywno
-const SMTP_HOST = 'smtp.gmail.com'; // 👈 WPISZ SWÓJ HOSTING
-const SMTP_PORT = 465;                   // 👈 WPISZ SWÓJ PORT;
+const SMTP_HOST = 'smtp.gmail.com'; 
+const SMTP_PORT = 465; 
 
 const transporter = nodemailer.createTransport({
 	host: SMTP_HOST,
 	port: SMTP_PORT,
 	secure: SMTP_PORT === 465,
 	auth: {
-		user: SMTP_USER, // Te dane nadal są bezpieczne z .env
-		pass: SMTP_PASS  // Te dane nadal są bezpieczne z .env
+		user: SMTP_USER, 
+		pass: SMTP_PASS  
 	}
 });
 
@@ -34,10 +32,10 @@ export const actions: Actions = {
 		}
 
 		const mailOptions = {
-			from: `"Formularz Portfolio" <${SMTP_USER}>`,
-			to: SMTP_USER, // Używamy zmiennej zdefiniowanej wyżej
-			subject: `Nowa wiadomość od: ${name}`,
-			text: `Od: ${name} <${email}>\n\nWiadomość:\n${message}`,
+			from: `"antWorks Nodemailer" <${SMTP_USER}>`,
+			to: SMTP_USER,
+			subject: `nodemailer: New message from: ${name}`,
+			text: `Od: ${name} <${email}>\n\nMessage:\n${message}`,
 			html: `<div style="font-family: 'Segoe UI', sans-serif; background: #1f1f1f; color: #ddd; padding: 20px;">
 					  <div style="max-width: 600px; margin: 0 auto; background: #2c2c2c; border-radius: 12px; padding: 30px; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
 					    <!-- Header -->
@@ -55,8 +53,8 @@ export const actions: Actions = {
 					    </div>
 					    <!-- Footer -->
 					    <div style="text-align: center; font-size: 12px; color: #888;">
-					      <p>Sent from your website contact form</p>
-					      <p><a href="https://yourdomain.com" style="color: #a3be8c; text-decoration: none;">Visit your site</a></p>
+					      <p>Sent from antWorks via nodemailer</p>
+					      <p><a href="https://antworks.vercel.app" style="color: #a3be8c; text-decoration: none;">Visit sending website</a></p>
 					    </div>
 					  </div>
 					</div>`
@@ -65,13 +63,13 @@ export const actions: Actions = {
 		try {
 			await transporter.sendMail(mailOptions);
 			return {
-				message: 'Wiadomość została wysłana pomyślnie!',
+				message: 'Message sent via nodemailer! Thank you for contacting me.',
 				success: true
 			};
 		} catch (error) {
-			console.error('Błąd przy wysyłaniu maila:', error);
+			console.error('An error occured. Contact website administrator at lukaszandrzejpilat@gmail.com.:', error);
 			return fail(500, {
-				message: 'Nie udało się wysłać wiadomości z powodu błędu serwera.',
+				message: 'A server error occured. Contact website administrator at lukaszandrzejpilat@gmail.com please.',
 				success: false
 			});
 		}

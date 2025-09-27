@@ -2,7 +2,7 @@
 	import { Logo, NavElements, TitlebarText } from '$lib';
 </script>
 
-<section class="relative flex w-full flex-wrap items-center justify-between px-4 py-0 shadow-xl">
+<section class="relative flex w-full flex-wrap items-center justify-between px-4 py-0">
 	<div class="order-1">
 		<Logo />
 	</div>
