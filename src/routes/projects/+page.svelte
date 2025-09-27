@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Titlebar } from '$lib';
+
 	interface Project {
 		title: string;
 		description: string;
@@ -11,39 +12,39 @@
 		{
 			title: 'Project One',
 			description: 'Short description of project one.',
-			details: 'Detailed information about project one. Technologies used, challenges, etc.',
+			details:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget libero sed nulla ullamcorper suscipit. Aliquam erat volutpat. Donec fringilla, nisi nec commodo fermentum, erat lorem consectetur nunc, vitae convallis urna lorem sed risus. Fusce sit amet arcu ac nunc posuere ultrices.',
 			expanded: false
 		},
 		{
 			title: 'Project Two',
 			description: 'Short description of project two.',
-			details: 'Detailed information about project two. Technologies used, challenges, etc.',
+			details:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget libero sed nulla ullamcorper suscipit. Aliquam erat volutpat. Donec fringilla, nisi nec commodo fermentum, erat lorem consectetur nunc, vitae convallis urna lorem sed risus. Fusce sit amet arcu ac nunc posuere ultrices.',
 			expanded: false
 		}
 	];
 
 	function toggle(index: number) {
-		projects[index].expanded = !projects[index].expanded;
-		// Reassign to trigger reactivity in Svelte
-		projects = [...projects];
+		// Collapse all projects first
+		projects = projects.map((p, i) => ({ ...p, expanded: i === index ? !p.expanded : false }));
 	}
 </script>
 
 <Titlebar />
 <div class="container mx-auto px-4 py-8">
-	<h1 class="mb-8 text-center text-3xl font-bold">Projects</h1>
-	<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+	<div class="grid grid-cols-1 gap-6 md:grid-cols-2 md:items-start">
 		{#each projects as project, i (project.title)}
-			<div class="rounded-lg bg-white p-6 shadow-md transition-all duration-300">
+			<div
+				class="rounded-2xl border border-white/20 bg-black/40 p-6 shadow-lg backdrop-blur-lg transition-all duration-300"
+			>
 				<div class="flex cursor-pointer items-center justify-between" on:click={() => toggle(i)}>
-					<h2 class="text-xl font-semibold">{project.title}</h2>
-					<span class="ml-4 text-gray-500">
-						{project.expanded ? '▲' : '▼'}
-					</span>
+					<h2 class="font-serif text-xl font-semibold text-gray-100">{project.title}</h2>
+					<span class="ml-4 text-gray-300">{project.expanded ? '▲' : '▼'}</span>
 				</div>
-				<p class="mt-2 text-gray-700">{project.description}</p>
+				<p class="mt-2 text-gray-300">{project.description}</p>
 				{#if project.expanded}
-					<div class="mt-4 border-t pt-4 text-gray-600">
+					<div class="mt-4 border-t border-white/20 pt-4 text-gray-200">
 						{project.details}
 					</div>
 				{/if}
