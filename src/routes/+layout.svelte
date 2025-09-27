@@ -6,11 +6,11 @@
 	let { children } = $props();
 	let isMobile = false;
 
-	onMount(() => {
-		const checkMobile = () => {
-			isMobile = window.innerWidth < 768;
-		};
+	function checkMobile() {
+		isMobile = window.innerWidth < 768;
+	}
 
+	onMount(() => {
 		checkMobile();
 		window.addEventListener('resize', checkMobile);
 		return () => window.removeEventListener('resize', checkMobile);
