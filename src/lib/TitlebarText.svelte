@@ -17,7 +17,7 @@
 		{#each 'antWorks'.split('') as letter, i}
 			<span
 				role="presentation"
-				class="duration-50 inline-block transition-transform hover:scale-125"
+				class="duration-50 inline-block transition-transform hover:scale-125 hover:text-green-600"
 				style="transition-delay: 0ms; text-shadow: 0 0 0 rgba(255,255,255,0);"
 				on:mouseenter={(e) => (e.currentTarget.style.textShadow = '0 0 12px rgba(13,13,13,0.6)')}
 				on:mouseleave={(e) => (e.currentTarget.style.textShadow = '0 0 0 rgba(255,255,255,0)')}
