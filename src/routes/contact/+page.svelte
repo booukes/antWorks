@@ -32,7 +32,7 @@
 				id="name"
 				type="text"
 				bind:value={name}
-				class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+				class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-700"
 				placeholder="Your name"
 				required
 			/>
@@ -43,7 +43,7 @@
 				id="email"
 				type="email"
 				bind:value={email}
-				class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+				class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-700"
 				placeholder="you@example.com"
 				required
 			/>
@@ -53,7 +53,7 @@
 			<textarea
 				id="message"
 				bind:value={message}
-				class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+				class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-700"
 				rows="5"
 				placeholder="Your message"
 				required
