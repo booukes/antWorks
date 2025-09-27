@@ -69,6 +69,13 @@
 			details:
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget libero sed nulla ullamcorper suscipit. Aliquam erat volutpat. Donec fringilla, nisi nec commodo fermentum, erat lorem consectetur nunc, vitae convallis urna lorem sed risus. Fusce sit amet arcu ac nunc posuere ultrices.',
 			expanded: false
+		},
+		{
+			title: 'Project Five',
+			description: 'Short description of project five.',
+			details:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget libero sed nulla ullamcorper suscipit. Aliquam erat volutpat. Donec fringilla, nisi nec commodo fermentum, erat lorem consectetur nunc, vitae convallis urna lorem sed risus. Fusce sit amet arcu ac nunc posuere ultrices.',
+			expanded: false
 		}
 	];
 
@@ -93,10 +100,14 @@
 				in:fly={{ y: 200, duration: 600, delay: i * 150, easing: cubicOut }}
 				class="rounded-2xl border border-white/20 bg-black/40 p-6 shadow-lg backdrop-blur-lg transition-all duration-300"
 			>
-				<div class="flex cursor-pointer items-center justify-between" on:click={() => toggle(i)}>
+				<button
+					type="button"
+					class="flex cursor-pointer items-center justify-between"
+					on:click={() => toggle(i)}
+				>
 					<h2 class="font-serif text-xl font-semibold text-gray-100">{project.title}</h2>
 					<span class="ml-4 text-gray-300">{project.expanded ? '▲' : '▼'}</span>
-				</div>
+				</button>
 				<p class="mt-2 text-gray-300">{project.description}</p>
 
 				{#if project.expanded}

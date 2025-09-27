@@ -1,16 +1,24 @@
-<script>
+<script lang="ts">
+	// 👈 Dodajemy lang="ts"
+	import { enhance } from '$app/forms';
+	// Importujemy `ActionData`, czyli specjalny, auto-generowany typ
+	// dla danych zwrotnych z naszego `+page.server.ts` 👈
+	import type { ActionData } from './$types';
 	import { Titlebar } from '$lib';
 	import { fly } from 'svelte/transition';
 
-	let name = '';
-	let email = '';
-	let message = '';
-	let submitted = false;
+	// Dodajemy typ do `form`. Teraz TS wie, że `form` może
+	// zawierać `message` i `success` albo być niezdefiniowane. 👈
+	export let form: ActionData;
+	let submitting = false;
 
-	function handleSubmit() {
-		submitted = true;
-		// Here you would handle sending the message
-	}
+	const handleSubmit = () => {
+		submitting = true;
+		return async ({ update }: { update: () => void }) => {
+			submitting = false;
+			update();
+		};
+	};
 </script>
 
 <Titlebar />
@@ -21,51 +29,70 @@
 >
 	<h1 class="mb-6 font-serif text-3xl font-bold text-gray-100">Contact Me</h1>
 
-	{#if submitted}
-		<div class="mb-4 rounded border border-green-600 bg-green-900/40 p-4 text-green-200">
-			Thank you for your message!
+	{#if form?.message}
+		<div
+			class:border-green-600={form?.success}
+			class:bg-green-900={form?.success}
+			class:text-green-200={form?.success}
+			class:border-red-600={!form?.success}
+			class:bg-red-900={!form?.success}
+			class:text-red-200={!form?.success}
+			class="mb-4 rounded border p-4"
+			role="alert"
+		>
+			{form.message}
 		</div>
 	{/if}
 
-	<form class="space-y-6" on:submit|preventDefault={handleSubmit}>
+	<form method="POST" action="?/sendMail" class="space-y-6" use:enhance={handleSubmit}>
 		<div>
 			<label class="mb-2 block font-serif text-gray-200" for="name">Name</label>
 			<input
 				id="name"
+				name="name"
 				type="text"
-				bind:value={name}
-				class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+				class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-700"
 				placeholder="Your name"
 				required
 			/>
 		</div>
+
 		<div>
 			<label class="mb-2 block font-serif text-gray-200" for="email">Email</label>
 			<input
 				id="email"
+				name="email"
 				type="email"
-				bind:value={email}
-				class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+				class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-700"
 				placeholder="you@example.com"
 				required
 			/>
 		</div>
+
 		<div>
 			<label class="mb-2 block font-serif text-gray-200" for="message">Message</label>
 			<textarea
 				id="message"
-				bind:value={message}
-				class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+				name="message"
+				class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-700"
 				rows="5"
 				placeholder="Your message"
 				required
 			></textarea>
 		</div>
+
 		<button
 			type="submit"
-			class="w-full rounded-lg bg-green-700 py-2 font-serif text-white transition hover:bg-blue-700"
+			class="flex w-full items-center justify-center gap-2 rounded-lg bg-green-700 py-2 font-serif text-white transition hover:bg-green-900 disabled:cursor-not-allowed disabled:opacity-50"
+			disabled={submitting}
 		>
-			Send Message
+			{#if submitting}
+				<span class="h-4 w-4 animate-spin rounded-full border-t-2 border-white border-opacity-70"
+				></span>
+				Sending...
+			{:else}
+				Send Message
+			{/if}
 		</button>
 	</form>
 </div>

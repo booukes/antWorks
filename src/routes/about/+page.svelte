@@ -10,8 +10,8 @@
 >
 	<h1 class="mb-4 font-serif text-3xl font-bold text-gray-100">About Me</h1>
 	<p class="font-serif text-lg text-gray-200">
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt dictum,
-		sapien sapien faucibus ligula, eget cursus sapien purus at magna. Curabitur auctor justo nec
-		arcu hendrerit, a scelerisque odio tincidunt. Phasellus id magna et sapien vehicula lacinia.
+		I’m a multi-platform developer building apps across desktop, mobile, and web. From WPF desktop
+		tools to Kotlin mobile apps and SvelteKit websites, I turn ideas into polished, functional
+		experiences with clean design and efficient code.
 	</p>
 </div>
