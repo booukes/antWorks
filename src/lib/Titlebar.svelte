@@ -2,14 +2,16 @@
 	import { Logo, NavElements, TitlebarText } from '$lib';
 </script>
 
-<section class="relative flex w-full items-center px-4 py-0 shadow-xl">
-	<div class="flex items-center">
+<section class="relative flex w-full flex-wrap items-center justify-between px-4 py-0 shadow-xl">
+	<div class="order-1">
 		<Logo />
 	</div>
-	<div class="absolute left-1/2 -translate-x-1/2 transform">
+
+	<div class="order-3 w-full md:absolute md:left-1/2 md:order-2 md:w-auto md:-translate-x-1/2">
 		<NavElements />
 	</div>
-	<div class="ml-auto flex items-center">
+
+	<div class="order-2 md:order-3">
 		<TitlebarText />
 	</div>
 </section>

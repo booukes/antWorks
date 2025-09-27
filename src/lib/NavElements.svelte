@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 </script>
 
-<nav class="flex flex-row items-end">
+<nav class="flex w-full flex-row items-end justify-center">
 	<a
 		href="/about"
 		class="m-4 transform font-serif text-2xl font-normal transition-transform duration-100

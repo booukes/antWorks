@@ -1,5 +1,6 @@
 <script>
 	import { Titlebar } from '$lib';
+	import { fly } from 'svelte/transition';
 
 	let name = '';
 	let email = '';
@@ -15,6 +16,7 @@
 <Titlebar />
 
 <div
+	in:fly={{ y: 20, duration: 500 }}
 	class="mx-auto mt-12 max-w-xl rounded-2xl border border-white/20 bg-black/40 p-8 shadow-lg backdrop-blur-lg"
 >
 	<h1 class="mb-6 font-serif text-3xl font-bold text-gray-100">Contact Me</h1>
