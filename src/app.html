@@ -31,6 +31,23 @@
 
 	<script>
 		document.addEventListener('DOMContentLoaded', () => {
+			window.addEventListener('resize', () => {
+			  setCanvasSize();
+			  stars.length = 0; // clear existing
+			  for (const type in starConfig) {
+			    const config = starConfig[type];
+			    for (let i = 0; i < config.count; i++) {
+			      stars.push({
+			        x: Math.random() * canvas.width,
+			        y: Math.random() * canvas.height,
+			        size: Math.random() * (config.size.max - config.size.min) + config.size.min,
+			        speed: Math.random() * (config.speed.max - config.speed.min) + config.speed.min,
+			        opacity: Math.random() * 0.5 + 0.5
+			      });
+			    }
+			  }
+			});
+
 			const canvas = document.getElementById('starfield');
 			const ctx = canvas.getContext('2d');
 
@@ -70,7 +87,6 @@
 			};
 
 			const stars = [];
-			let mouse = { x: null, y: null };
 			let meteors = [];
 
 			for (const type in starConfig) {
@@ -91,23 +107,33 @@
 			        x: Math.random() * canvas.width * 1.5,
 			        y: -10,
 			        len: Math.random() * 100 + 50,
-					speed: Math.random() * 28 + 4,
-			        	
+					speed: Math.random() * 28 + 4,	
 			    });
 			}
 			setInterval(spawnMeteor, 4000);
 
+			// --- Parallax smoothing ---
+			let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+			let targetMouse = { ...mouse };
+	
 			window.addEventListener('mousemove', e => {
-			    mouse.x = e.clientX;
-			    mouse.y = e.clientY;
+				targetMouse.x = e.clientX;
+				targetMouse.y = e.clientY;
 			});
-
+		
+			function updateMouse() {
+				// The 0.05 is the "follow speed" (lower = smoother, slower)
+				mouse.x += (targetMouse.x - mouse.x) * 0.05;
+				mouse.y += 	(targetMouse.y - mouse.y) * 0.05;
+			}
+			
 			function animate() {
+					updateMouse();
 				ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-				const bgGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-				bgGradient.addColorStop(0, '#290445');
-				bgGradient.addColorStop(1, '#000000');
+				const bgGradient = ctx.createLinearGradient(0, canvas.height, 0, 0);
+				bgGradient.addColorStop(0.10, '#000000');
+				bgGradient.addColorStop(1, '#11083B'); //#290445
 				ctx.fillStyle = bgGradient;
 				ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -118,8 +144,8 @@
 					if (star.x < -star.size) star.x = canvas.width + star.size;
 					if (star.y > canvas.height + star.size) star.y = -star.size;
 
-					const offsetX = (mouse.x - canvas.width / 2) / 25;
-					const offsetY = (mouse.y - canvas.height / 2) / 25;
+					const offsetX = (mouse.x - canvas.width / 2) / 5;
+					const offsetY = (mouse.y - canvas.height / 2) / 5;
 
 					const parallaxX = star.x + offsetX * star.speed;
 					const parallaxY = star.y + offsetY * star.speed;
