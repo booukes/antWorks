@@ -45,7 +45,19 @@
 				id="name"
 				name="name"
 				type="text"
-				class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#190c55]"
+				class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#290445]"
+				placeholder="Your name"
+				required
+			/>
+		</div>
+
+		<div>
+			<label class="mb-2 block font-serif text-gray-200" for="name">Subject</label>
+			<input
+				id="subject"
+				name="subject"
+				type="subject"
+				class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#290445]"
 				placeholder="Your name"
 				required
 			/>
@@ -57,7 +69,7 @@
 				id="email"
 				name="email"
 				type="email"
-				class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#190c55]"
+				class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#290445]"
 				placeholder="you@example.com"
 				required
 			/>
@@ -68,7 +80,7 @@
 			<textarea
 				id="message"
 				name="message"
-				class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#190c55]"
+				class="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#290445]"
 				rows="5"
 				placeholder="Your message"
 				required
@@ -77,7 +89,7 @@
 
 		<button
 			type="submit"
-			class="flex w-full items-center justify-center gap-2 rounded-lg bg-[#11083B] py-2 font-serif text-white transition hover:bg-[#180c4e] disabled:cursor-not-allowed disabled:opacity-50"
+			class="flex w-full items-center justify-center gap-2 rounded-lg bg-[#290445] py-2 font-serif text-white transition hover:bg-[#1e0333] disabled:cursor-not-allowed disabled:opacity-50"
 			disabled={submitting}
 		>
 			{#if submitting}

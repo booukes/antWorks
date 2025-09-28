@@ -8,6 +8,11 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 	<style>
+		:global(body) {
+		font-family: 'Inter', sans-serif;
+		/* Możesz dodać tu jakieś tło, żeby efekt był widoczny */
+		/* background: linear-gradient(to bottom right, #1a202c, #2d3748); */
+	}
 		body {
 			background-color: #050921;
 			overflow-x: hidden;
@@ -110,7 +115,7 @@
 					speed: Math.random() * 28 + 4,	
 			    });
 			}
-			setInterval(spawnMeteor, 4000);
+			setInterval(spawnMeteor, 3000);
 
 			// --- Parallax smoothing ---
 			let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
@@ -133,7 +138,7 @@
 
 				const bgGradient = ctx.createLinearGradient(0, canvas.height, 0, 0);
 				bgGradient.addColorStop(0.10, '#000000');
-				bgGradient.addColorStop(1, '#11083B'); //#290445
+				bgGradient.addColorStop(1, '#290445'); //#290445
 				ctx.fillStyle = bgGradient;
 				ctx.fillRect(0, 0, canvas.width, canvas.height);
 

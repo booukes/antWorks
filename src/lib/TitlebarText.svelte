@@ -35,7 +35,7 @@
 			style:max-width={isHovering ? '150px' : '0px'}
 		>
 			<p
-				class="ml-3 flex whitespace-nowrap font-serif text-xl transition-opacity duration-500 ease-in-out"
+				class="font-Inter ml-3 flex whitespace-nowrap text-xl transition-opacity duration-500 ease-in-out"
 				class:opacity-100={isHovering}
 				class:opacity-0={!isHovering}
 			>

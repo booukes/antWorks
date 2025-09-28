@@ -2,32 +2,8 @@
 	import { onMount } from 'svelte';
 	import { Titlebar } from '$lib';
 	import { fly } from 'svelte/transition';
-	import { cubicOut } from 'svelte/easing';
-
-	// Twoja customowa animacja - bez zmian, jest dobra
-	function roll(node: HTMLElement, { duration = 400, easing = cubicOut }) {
-		const style = getComputedStyle(node);
-		const height = node.offsetHeight;
-		const paddingTop = parseFloat(style.paddingTop);
-		const paddingBottom = parseFloat(style.paddingBottom);
-		const borderTopWidth = parseFloat(style.borderTopWidth);
-		const borderBottomWidth = parseFloat(style.borderBottomWidth);
-
-		node.style.overflow = 'hidden';
-
-		return {
-			duration,
-			easing,
-			css: (t: number) => `
-                max-height: ${t * height}px;
-                opacity: ${t};
-                padding-top: ${t * paddingTop}px;
-                padding-bottom: ${t * paddingBottom}px;
-                border-top-width: ${t * borderTopWidth}px;
-                border-bottom-width: ${t * borderBottomWidth}px;
-            `
-		};
-	}
+	import { cubicInOut } from 'svelte/easing';
+	// Usunąłem nieużywane importy 'slide' i 'quintOut'
 
 	interface Project {
 		title: string;
@@ -46,9 +22,9 @@
 				'A real-time satellite tracking and trajectory prediction application for Android.',
 			details:
 				'antGNSS is a specialized Android application designed for real-time tracking of Earth-orbiting satellites. It leverages the device’s built-in GNSS receiver to obtain precise location data and fetches ephemeris data for a wide range of satellites. The core of the application lies in its predictive engine, which uses orbital mechanics models to calculate and project future satellite trajectories. This complex astronomical data is then transformed into intuitive, interactive visualizations using Jetpack Compose, offering users a clear and engaging way to explore the celestial sphere. The project involved significant challenges in data parsing, state management for real-time updates, and performance optimization for smooth rendering on mobile devices.',
-			videoSrc: '/videos/antgnss-demo.mp4',
+			videoSrc: '/videos/antgnss-demo.mp4', // Pamiętaj, żeby to były zoptymalizowane pliki!
 			techStack: ['Kotlin', 'Jetpack Compose', 'Android SDK', 'GNSS API', 'Ktor', 'Coroutines'],
-			githubUrl: 'https://github.com/shit',
+			githubUrl: 'https://github.com/twoj-user/antGNSS',
 			expanded: false
 		},
 		{
@@ -56,9 +32,9 @@
 			description: 'A minimalist, distraction-free text editor focused on productivity.',
 			details:
 				'antWriter is a lightweight, cross-platform text editor built on the principles of minimalist design and focused productivity. The primary goal was to create a writing environment that eliminates distractions and allows the user to concentrate solely on their content. Key features include a "Zen Mode" which provides a clean, full-screen interface, and a robust, non-intrusive autosave mechanism that ensures data integrity without interrupting the user\'s workflow. The application is designed to be resource-efficient, with a fast startup time and minimal memory footprint. The development process focused on creating a seamless user experience through subtle animations and a highly responsive interface, ensuring a smooth and effortless writing process.',
-			videoSrc: '/videos/antwriter-demo.mp4',
-			techStack: ['C#', 'WPF', '.NET', 'JSON', 'XAML'],
-			githubUrl: 'https://github.com/booukes/antWriter',
+			videoSrc: '/videos/antwriter-demo.mp4', // Pamiętaj, żeby to były zoptymalizowane pliki!
+			techStack: ['SvelteKit', 'TypeScript', 'Tauri', 'Rust', 'Tailwind CSS'],
+			githubUrl: 'https://github.com/twoj-user/antWriter',
 			expanded: false
 		},
 		{
@@ -66,9 +42,9 @@
 			description: 'A modern, responsive developer portfolio built with Svelte and Tailwind CSS.',
 			details:
 				"This portfolio is a single-page application (SPA) designed to serve as a dynamic and professional showcase of my software development projects. Built from the ground up with Svelte and TypeScript, it emphasizes performance, responsiveness, and a clean user interface. The component-based architecture of Svelte allows for modular and maintainable code. State management is handled reactively within the framework, providing a smooth and interactive user experience. All animations and page transitions are implemented using Svelte's built-in modules, ensuring they are lightweight and performant. The project is styled with Tailwind CSS, utilizing a utility-first approach for rapid and consistent UI development across all components and screen sizes.",
-			videoSrc: '/videos/portfolio-demo.mp4',
+			videoSrc: '',
 			techStack: ['SvelteKit', 'TypeScript', 'Tailwind CSS', 'Vite', 'Svelte Transitions'],
-			githubUrl: 'https://github.com/booukes/portfolio',
+			githubUrl: 'https://github.com/twoj-user/portfolio',
 			expanded: false
 		}
 	];
@@ -79,8 +55,15 @@
 		projects = initialProjects;
 	});
 
-	function toggle(index: number) {
-		projects = projects.map((p, i) => ({ ...p, expanded: i === index ? !p.expanded : false }));
+	function toggle(selectedIndex: number) {
+		projects.forEach((project, i) => {
+			if (i === selectedIndex) {
+				project.expanded = !project.expanded;
+			} else {
+				project.expanded = false;
+			}
+		});
+		projects = projects;
 	}
 </script>
 
@@ -89,8 +72,9 @@
 	<div class="grid grid-cols-1 gap-6 md:grid-cols-2 md:items-start">
 		{#each projects as project, i (project.title)}
 			<div
-				in:fly={{ y: 200, duration: 800, delay: i * 150, easing: cubicOut }}
-				class="rounded-2xl border border-white/20 bg-black/20 p-6 shadow-lg backdrop-blur-lg transition-all duration-300"
+				in:fly={{ y: 200, duration: 800, delay: i * 150, easing: cubicInOut }}
+				class="rounded-2xl border border-white/20 bg-black/20 p-6 shadow-lg
+                       transition-[border,box-shadow,background-color] duration-300"
 			>
 				<button
 					type="button"
@@ -99,7 +83,7 @@
 				>
 					<div>
 						<h2 class="font-serif text-xl font-semibold text-gray-100">{project.title}</h2>
-						<p class="mt-2 text-gray-400">{project.description}</p>
+						<p class="mb-4 mt-2 text-gray-400">{project.description}</p>
 					</div>
 					<span
 						class="ml-4 flex-shrink-0 text-gray-300 transition-transform duration-300"
@@ -107,24 +91,51 @@
 					>
 				</button>
 
-				{#if project.expanded}
-					<div class="mt-4 border-t border-white/20 pt-4" transition:roll={{ duration: 600 }}>
-						<div class="mb-4 overflow-hidden rounded-lg">
-							<video
-								class="h-full w-full object-cover"
-								autoplay
-								loop
-								muted
-								playsinline
-								src={project.videoSrc}
-							>
-								Your browser does not support the video tag.
-							</video>
-						</div>
-
-						<p class="text-base leading-relaxed text-gray-300">
-							{project.details}
-						</p>
+				<div class="details-wrapper" class:expanded={project.expanded}>
+					<div class="details-content">
+						{#if project.title === 'antGNSS' && project.videoSrc}
+							<div class="md:flex md:gap-4">
+								<div
+									class="video-container mb-4 flex-shrink-0 overflow-hidden rounded-lg md:mb-0 md:w-1/2 lg:w-1/3"
+								>
+									<video
+										class="h-full w-full object-cover"
+										autoplay
+										loop
+										muted
+										playsinline
+										src={project.videoSrc}
+									>
+										Your browser does not support the video tag.
+									</video>
+								</div>
+								<div class="md:flex-grow">
+									<p class="text-base leading-relaxed text-gray-300">
+										{project.details}
+									</p>
+								</div>
+							</div>
+						{:else if project.videoSrc}
+							<div class="video-container mb-4 overflow-hidden rounded-lg">
+								<video
+									class="h-full w-full object-cover"
+									autoplay
+									loop
+									muted
+									playsinline
+									src={project.videoSrc}
+								>
+									Your browser does not support the video tag.
+								</video>
+							</div>
+							<p class="text-base leading-relaxed text-gray-300">
+								{project.details}
+							</p>
+						{:else}
+							<p class="text-base leading-relaxed text-gray-300">
+								{project.details}
+							</p>
+						{/if}
 
 						<div class="mt-6">
 							<h4 class="mb-3 text-lg font-semibold text-gray-200">Technologies Used</h4>
@@ -165,7 +176,7 @@
 							</a>
 						</div>
 					</div>
-				{/if}
+				</div>
 			</div>
 		{/each}
 	</div>
@@ -173,6 +184,35 @@
 
 <style>
 	.rotate-180 {
-		transform: rotate(0deg);
+		transform: rotate(180deg);
+	}
+
+	.video-container {
+		aspect-ratio: 16 / 9;
+		background-color: #111;
+	}
+
+	.details-wrapper {
+		display: grid;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+	}
+
+	.details-wrapper.expanded {
+		grid-template-rows: 1fr;
+	}
+
+	.details-content {
+		overflow: hidden;
+		opacity: 0;
+		transform: translateY(-10px);
+		transition:
+			opacity 0.3s ease-out 0.2s,
+			transform 0.3s ease-out 0.2s;
+	}
+
+	.details-wrapper.expanded .details-content {
+		opacity: 1;
+		transform: translateY(0);
 	}
 </style>

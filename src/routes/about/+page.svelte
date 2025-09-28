@@ -36,24 +36,18 @@
 	let rotateX = 0;
 	let rotateY = 0;
 
-	// Funkcja do obsługi ruchu myszy dla efektu 3D
+	// Funkcja do obsługi ruchu myszy dla efektu 3D - teraz globalnie
 	function handleMouseMove(event: MouseEvent) {
-		if (!mainContainer) return;
-
-		const { left, top, width, height } = mainContainer.getBoundingClientRect();
-		const x = event.clientX - left;
-		const y = event.clientY - top;
-
-		const centerX = width / 2;
-		const centerY = height / 2;
+		const centerX = window.innerWidth / 2;
+		const centerY = window.innerHeight / 2;
 
 		const maxRotate = 8; // Maksymalny kąt obrotu
 
-		rotateY = ((x - centerX) / centerX) * maxRotate;
-		rotateX = -((y - centerY) / centerY) * maxRotate;
+		rotateY = ((event.clientX - centerX) / centerX) * maxRotate;
+		rotateX = -((event.clientY - centerY) / centerY) * maxRotate;
 	}
 
-	// Resetowanie obrotu, gdy mysz opuści element
+	// Resetowanie obrotu, gdy mysz opuści okno
 	function handleMouseLeave() {
 		rotateX = 0;
 		rotateY = 0;
@@ -70,28 +64,28 @@
 	/>
 </svelte:head>
 
+<svelte:window on:mousemove={handleMouseMove} on:mouseout={handleMouseLeave} />
+
 <Titlebar />
 
 <div class="relative min-h-screen w-full overflow-hidden pt-4 font-sans">
-	<!-- Main Content -->
 	<main
 		class="relative z-10 flex min-h-screen w-full items-start justify-center px-4 pb-16"
 		style="perspective: 1000px;"
 	>
 		<div
 			bind:this={mainContainer}
-			on:mousemove={handleMouseMove}
-			on:mouseleave={handleMouseLeave}
 			style="transform: rotateX({rotateX}deg) rotateY({rotateY}deg);"
-			in:fly={{ y: 20, duration: 800, delay: 200 }}
-			class="aurora-container w-full max-w-4xl rounded-3xl border border-white/10 bg-black/20 p-8 text-center text-gray-100 shadow-2xl shadow-purple-500/10 backdrop-blur-2xl transition-transform duration-300 ease-out md:p-12"
+			in:fly={{ y: 100, duration: 400, delay: 0 }}
+			class="w-full max-w-4xl rounded-3xl border border-white/10 bg-black/20 p-8 text-center text-gray-100 shadow-2xl shadow-purple-500/10 backdrop-blur-xl transition-transform duration-300 ease-out md:p-12"
 		>
 			<section class="mb-12">
 				<h1 class="mb-4 font-serif text-5xl font-bold text-white md:text-7xl">Hey, I’m Łukasz</h1>
 				<p class="mx-auto max-w-2xl text-lg leading-relaxed text-gray-300 md:text-xl">
-					I’m a multi-platform developer turning ideas into polished, functional experiences. From
-					WPF desktop tools to Kotlin mobile apps and SvelteKit websites, I focus on clean design,
-					smooth interactions, and efficient code.
+					I’m a multi-platform developer who loves building from the ground up. Starting from
+					backend systems and data-heavy logic to smooth, clean interfaces. Whether it’s a WPF
+					desktop tool, a Kotlin Android app, or a Svelte web project, I focus on performance,
+					clarity, and the most satysfying user experience possible.
 				</p>
 			</section>
 
@@ -129,7 +123,6 @@
 				</div>
 			</section>
 
-			<!-- Social Links Section -->
 			<section>
 				<div class="mt-8 border-t border-white/10 pt-8">
 					<h2 class="mb-6 text-sm font-bold uppercase tracking-widest text-purple-400">
@@ -157,54 +150,15 @@
 </div>
 
 <style>
-	/* Using PostCSS syntax for Tailwind directives */
+	/* Usunąłem stąd cały customowy CSS dla `.aurora-container` i animacji. Zostawiłem tylko fonty. */
 
-	/* Custom styles for fonts and the aurora effect */
 	:global(body) {
 		font-family: 'Inter', sans-serif;
+		/* Możesz dodać tu jakieś tło, żeby efekt był widoczny */
+		/* background: linear-gradient(to bottom right, #1a202c, #2d3748); */
 	}
 
 	.font-serif {
 		font-family: 'Playfair Display', serif;
-	}
-
-	.aurora-container {
-		position: relative;
-		overflow: hidden; /* This is crucial for the pseudo-element to be contained */
-		will-change: transform; /* Performance hint for the browser */
-	}
-
-	/* The glowing aurora effect */
-	.aurora-container::before {
-		content: '';
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		width: 150%;
-		height: 150%;
-		z-index: -1;
-
-		background: radial-gradient(
-			circle,
-			rgba(168, 85, 247, 0.2),
-			/* Purple */ rgba(99, 102, 241, 0.15),
-			/* Indigo */ rgba(59, 130, 246, 0.1),
-			/* Blue */ transparent 60%
-		);
-
-		animation: aurora-glow 25s linear infinite;
-		transform-origin: center center;
-	}
-
-	@keyframes aurora-glow {
-		0% {
-			transform: translate(-50%, -50%) rotate(0deg) scale(1);
-		}
-		50% {
-			transform: translate(-50%, -50%) rotate(180deg) scale(1.2);
-		}
-		100% {
-			transform: translate(-50%, -50%) rotate(360deg) scale(1);
-		}
 	}
 </style>
