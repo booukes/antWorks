@@ -111,7 +111,7 @@ Don't forget to give the project a star! Thanks again!
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` file for more information. <br />
+Distributed under the CC NC License. See `LICENCE` file for more information. <br />
 Logo designed by Jacob Eckert, available under CC BY-SA 4.0 license via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Ant_(Jacob_Eckert).svg).
 
 ---
