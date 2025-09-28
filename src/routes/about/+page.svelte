@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fly, fade } from 'svelte/transition';
+	import { Titlebar } from '$lib';
 
 	// Twoje dane
 	const skills = [
@@ -31,7 +32,7 @@
 		}
 	];
 
-	let mainContainer: HTMLDivElement;
+	let mainContainer: HTMLElement;
 	let rotateX = 0;
 	let rotateY = 0;
 
@@ -62,17 +63,19 @@
 <svelte:head>
 	<title>Łukasz - Multi-platform Developer</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link rel="preconnect" href="https://fonts.gstatic.com" />
 	<link
 		href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap"
 		rel="stylesheet"
 	/>
 </svelte:head>
 
-<div class="relative min-h-screen w-full overflow-hidden bg-gray-900 font-sans">
+<Titlebar />
+
+<div class="relative min-h-screen w-full overflow-hidden font-sans">
 	<!-- Main Content -->
 	<main
-		class="relative z-10 flex min-h-screen w-full items-center justify-center p-4"
+		class="relative z-10 flex min-h-screen w-full items-center justify-center p-4 pt-24"
 		style="perspective: 1000px;"
 	>
 		<div
@@ -81,7 +84,7 @@
 			on:mouseleave={handleMouseLeave}
 			style="transform: rotateX({rotateX}deg) rotateY({rotateY}deg);"
 			in:fly={{ y: 20, duration: 800, delay: 200 }}
-			class="aurora-container w-full max-w-4xl rounded-3xl border border-white/10 bg-black/30 p-8 text-center text-gray-100 shadow-2xl shadow-purple-500/10 backdrop-blur-2xl transition-transform duration-300 ease-out md:p-12"
+			class="aurora-container w-full max-w-4xl rounded-3xl border border-white/10 bg-black/20 p-8 text-center text-gray-100 shadow-2xl shadow-purple-500/10 backdrop-blur-2xl transition-transform duration-300 ease-out md:p-12"
 		>
 			<section class="mb-12">
 				<h1 class="mb-4 font-serif text-5xl font-bold text-white md:text-7xl">Hey, I’m Łukasz</h1>
@@ -154,10 +157,11 @@
 </div>
 
 <style>
+	/* Using PostCSS syntax for Tailwind directives */
+
 	/* Custom styles for fonts and the aurora effect */
 	:global(body) {
 		font-family: 'Inter', sans-serif;
-		background-color: #0a0a0a; /* Fallback background */
 	}
 
 	.font-serif {
