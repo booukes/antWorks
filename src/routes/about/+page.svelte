@@ -11,9 +11,12 @@
 		'Kotlin',
 		'Jetpack Compose',
 		'TypeScript',
-		'Clean UI/UX'
+		'MySQL',
+		'Firebase',
+		'Firestore',
+		'Microcontroller Development'
 	];
-	const hobbies = ['Photography', 'Gaming', 'Airsoft', 'Coding', 'Cats'];
+	const hobbies = ['Photography', 'Astronomy', 'Airsoft', 'Coding', 'Technology', 'Cats'];
 	const socials = [
 		{
 			name: 'GitHub',
@@ -82,10 +85,10 @@
 			<section class="mb-12">
 				<h1 class="mb-4 font-serif text-5xl font-bold text-white md:text-7xl">Hey, I’m Łukasz</h1>
 				<p class="mx-auto max-w-2xl text-lg leading-relaxed text-gray-300 md:text-xl">
-					I’m a multi-platform developer who loves building from the ground up. Starting from
-					backend systems and data-heavy logic to smooth, clean interfaces. Whether it’s a WPF
-					desktop tool, a Kotlin Android app, or a Svelte web project, I focus on performance,
-					clarity, and the most satysfying user experience possible.
+					I craft clean, performant apps — from low-level satellite tracking tools to smooth desktop
+					and web experiences. Whether it’s a microcontroller project, a Kotlin Android app, or a
+					Svelte web project, I focus on performance, clarity, and the most satysfying user
+					experience possible.
 				</p>
 			</section>
 
@@ -108,8 +111,8 @@
 			<section class="mb-12">
 				<h2 class="mb-4 font-serif text-4xl font-bold text-white md:text-5xl">After hours</h2>
 				<p class="mx-auto mb-6 max-w-2xl text-lg leading-relaxed text-gray-300 md:text-xl">
-					When I’m not coding, you’ll find me behind the lens capturing moments, immersed in a video
-					game, strategizing in airsoft battles, or spending quality time with my cat.
+					When I’m not coding, you’ll find me behind the lens capturing moments, pondering about the
+					deep space, strategizing in airsoft battles, or spending quality time with my cat.
 				</p>
 				<div class="flex flex-wrap justify-center gap-3">
 					{#each hobbies as hobby, i}
