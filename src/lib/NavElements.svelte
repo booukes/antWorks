@@ -19,7 +19,7 @@
 		class="m-4 transform font-serif text-2xl font-normal text-gray-300 transition-transform duration-100"
 		class:scale-125={$page.url.pathname === '/projects'}
 		class:font-bold={$page.url.pathname === '/projects'}
-		class:hover:scale-1250={$page.url.pathname !== '/projects'}
+		class:hover:scale-125={$page.url.pathname !== '/projects'}
 	>
 		projects
 	</a>
