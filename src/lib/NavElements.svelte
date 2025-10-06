@@ -6,9 +6,9 @@
 	<a
 		href="/about"
 		class="m-4 transform font-serif text-2xl font-normal text-gray-300 transition-transform duration-100"
-		class:scale-140={$page.url.pathname === '/about'}
+		class:scale-125={$page.url.pathname === '/about'}
 		class:font-bold={$page.url.pathname === '/about'}
-		class:hover:scale-110={$page.url.pathname !== '/about'}
+		class:hover:scale-125={$page.url.pathname !== '/about'}
 	>
 		about
 	</a>
@@ -17,9 +17,9 @@
 	<a
 		href="/projects"
 		class="m-4 transform font-serif text-2xl font-normal text-gray-300 transition-transform duration-100"
-		class:scale-140={$page.url.pathname === '/projects'}
+		class:scale-125={$page.url.pathname === '/projects'}
 		class:font-bold={$page.url.pathname === '/projects'}
-		class:hover:scale-110={$page.url.pathname !== '/projects'}
+		class:hover:scale-1250={$page.url.pathname !== '/projects'}
 	>
 		projects
 	</a>
@@ -28,9 +28,9 @@
 	<a
 		href="/contact"
 		class="m-4 transform font-serif text-2xl font-normal text-gray-300 transition-transform duration-100"
-		class:scale-140={$page.url.pathname === '/contact'}
+		class:scale-125={$page.url.pathname === '/contact'}
 		class:font-bold={$page.url.pathname === '/contact'}
-		class:hover:scale-110={$page.url.pathname !== '/contact'}
+		class:hover:scale-125={$page.url.pathname !== '/contact'}
 	>
 		contact
 	</a>
