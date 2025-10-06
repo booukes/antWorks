@@ -32,7 +32,7 @@
 			details:
 				'antWriter is a lightweight, cross-platform text editor built on the principles of minimalist design and focused productivity. The primary goal was to create a writing environment that eliminates distractions and allows the user to concentrate solely on their content. Key features include a "Zen Mode" which provides a clean, full-screen interface, and a robust, non-intrusive autosave mechanism that ensures data integrity without interrupting the user\'s workflow. The application is designed to be resource-efficient, with a fast startup time and minimal memory footprint. The development process focused on creating a seamless user experience through subtle animations and a highly responsive interface, ensuring a smooth and effortless writing process.',
 			videoSrc: '/videos/antwriter-demo.mp4',
-			techStack: ['SvelteKit', 'TypeScript', 'Tauri', 'Rust', 'Tailwind CSS'],
+			techStack: ['.NET', 'WPF', 'C#', 'Metro UI'],
 			githubUrl: 'https://github.com/booukes/antWriter',
 			expanded: false
 		},
