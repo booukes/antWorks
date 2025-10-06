@@ -150,7 +150,6 @@
 				</div>
 			</section>
 		</div>
-		Hi
 	</main>
 </div>
 
